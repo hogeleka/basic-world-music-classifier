@@ -26,4 +26,4 @@ def upload_file():
         else:
             return "incompatible file type. go back and try again"
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
