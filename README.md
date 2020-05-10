@@ -1,5 +1,5 @@
 # basic-world-music-classifier
-Simple app which uses machine learning to classify audio under Latin American/Caribbean, Sub-Saharan Africa, South Asia, and South East Asia. Built off of the work _Parul Pandey_ (see https://towardsdatascience.com/music-genre-classification-with-python-c714d032f0d8) 
+Simple app which uses machine learning to classify audio under Latin American/Caribbean, Sub-Saharan Africa, South Asia, and South East Asia. Built off of the work of _Parul Pandey_ (see https://towardsdatascience.com/music-genre-classification-with-python-c714d032f0d8) 
 
 
 ### Setup
