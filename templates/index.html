@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='stylesheets/main.css') }}>
+        <title>World Music Region Predictor</title>
     </head>
     <body>
         <div class="title-style">
@@ -9,15 +10,14 @@
         </div>
 
         <div class="upload-form">
-            <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+            <form action = "http://localhost:5000/result" method = "POST" enctype = "multipart/form-data">
                 <input type = "file" name = "file"/>
                 <input class="submit-button" type = "submit"/>
             </form>
         </div>
 
         <div class="developed-by">
-            <p>Developed by Rohit Bagda and Chukwubueze Hosea Ogeleka for MUS-111 Spring 2020</p>
+            <p>Developed by Rohit Bagda and Chukwubueze Hosea Ogeleka for MUSI-111 Spring 2020</p>
         </div>
     </body>
-
 </html>
