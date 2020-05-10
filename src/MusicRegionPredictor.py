@@ -26,7 +26,7 @@ def rankList(scores):
     return output
 
 
-def getResultClassList(sortedDict):
+def getResultClassList(sortedDict, isType1):
     """takes a dictionary where class codes are sorted by ranks and returns a corresponding list of Region names
     sorted by rank."""
     musicRegionMap = {
@@ -35,7 +35,11 @@ def getResultClassList(sortedDict):
         2: "South East Asia",
         3: "Sub-Saharan Africa"
     }
-    return [musicRegionMap[code] for code in sortedDict]
+    if isType1:
+        valuesSum = sum(sortedDict.values())
+        return [f'{musicRegionMap[code]}: {int((sortedDict[code]/valuesSum) * 100)}%' for code in sortedDict]
+    else:
+        return [f'{musicRegionMap[code]}: {sortedDict[code]}' for code in sortedDict]
 
 
 def predictRegionOffset(audioFilePath, offsetValue):
@@ -97,5 +101,5 @@ def predictSong(audioPath):
     end = time.time()
     print(f'predicted song in {end - start} seconds')
 
-    return getResultClassList(sortedScoreCountPredictions), getResultClassList(sortedFirstPositionPredictions)
+    return getResultClassList(sortedScoreCountPredictions, isType1=True), getResultClassList(sortedFirstPositionPredictions, isType1=False)
 
