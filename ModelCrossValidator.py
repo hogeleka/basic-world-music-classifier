@@ -85,10 +85,5 @@ for train, test in kFold.split(X, y):
     print("%s: %.2f%%" % (model.metrics_names[1], test_acc * 100))
     cvscores.append(test_acc * 100)
 print("%.2f%% (+/- %.2f%%)" % (np.mean(cvscores), np.std(cvscores)))
-# print('test_acc: ',test_acc)
 end2 = time.time()
 print(f'------------finished with epochs and stuff in {end2-start2}seconds -------------')
-
-# # model.summary()
-# modelFileName = f'world_music_region_model_{epochs}epocs.h5'
-# modelSaved = model.save(modelFileName)

@@ -26,70 +26,50 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-# modelName = "world_music_region_model_500epocs.h5"
 modelName = "world_music_region_model_4_layers_500epochs.h5"
 model = load_model(modelName)
 # model.summary()
 
-def predictRegion(audioFilePath):
-    y, sr = librosa.load(audioFilePath, mono=True, duration=60)
-    dataRow = []
-    chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
-    dataRow.append(np.mean(chroma_stft))
-    rmse = librosa.feature.rms(y=y)
-    dataRow.append(np.mean(rmse))
-    spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
-    dataRow.append(np.mean(spec_cent))
-    spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
-    dataRow.append(np.mean(spec_bw))
-    rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
-    dataRow.append(np.mean(rolloff))
-    zcr = librosa.feature.zero_crossing_rate(y)
-    dataRow.append(np.mean(zcr))
-    mfcc = librosa.feature.mfcc(y=y, sr=sr)
-    for e in mfcc:
-        dataRow.append(np.mean(e))
-    dataRowNumpyArray = np.array(dataRow)
-    # model.summary()
-    predicted = model.predict(np.array([dataRowNumpyArray, ]))
-    print(predicted)
-    print(f'predicted class: {np.argmax(predicted[0])}')
-    return np.argmax(predicted[0])
-    # return str(np.argmax(predicted[0]))
 
-
-
-# for i in range(3):
-#     fileName = f'sample_audio/Javanese Gamelan Ensemble - Pelog Barang - Singa Nebah (The Pouncing Lion)_{i}.wav'
-#     predictRegion(fileName)
-
-# for i in range(4):
-#     fileName = f'sample_audio/Jalikunda African Drums take the Montserrat African Music Festival by storm_{i}.wav'
-#     predictRegion(fileName)
-
-# predictRegion("wm_regions/sub_sahara_africa/Angola Ngoma Dance Ensemble_00.wav")
-
-# predictions = {}
-# for i in range(7):
-#     fileName = f"sample_audio/Kpanlogo (DMC)_{i}.wav"
-#     predictedClass = predictRegion(fileName)
-#     if predictedClass in predictions:
-#         predictions[predictedClass] += 1
-#     else:
-#         predictions[predictedClass] = 1
-# print(predictions)
+##Old method  -- keep commented out ----
+# def predictRegion(audioFilePath):
+#     y, sr = librosa.load(audioFilePath, mono=True, duration=60)
+#     dataRow = []
+#     chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+#     dataRow.append(np.mean(chroma_stft))
+#     rmse = librosa.feature.rms(y=y)
+#     dataRow.append(np.mean(rmse))
+#     spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
+#     dataRow.append(np.mean(spec_cent))
+#     spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+#     dataRow.append(np.mean(spec_bw))
+#     rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+#     dataRow.append(np.mean(rolloff))
+#     zcr = librosa.feature.zero_crossing_rate(y)
+#     dataRow.append(np.mean(zcr))
+#     mfcc = librosa.feature.mfcc(y=y, sr=sr)
+#     for e in mfcc:
+#         dataRow.append(np.mean(e))
+#     dataRowNumpyArray = np.array(dataRow)
+#     predicted = model.predict(np.array([dataRowNumpyArray, ]))
+#     print(predicted)
+#     print(f'predicted class: {np.argmax(predicted[0])}')
+#     return np.argmax(predicted[0])
 
 def rankList(scores):
+    """takes an array of numbers and returns an array of the relative positions of the indices when values are sorted in reverse order
+    For example: [5.2, 7.1, 2.9, 1.2] --> [2, 1, 3, 4] """
     vals = {}
     for i in range(len(scores)):
         vals[i] = scores[i]
-    output = [None] * 4
+    output = [None] * 4  #our project has 4 different classifications
     sortedRanks = {k: v for k, v in sorted(vals.items(), key=lambda item: item[1], reverse=True)}
     scoreFactor = 0
     for key in sortedRanks:
         output[key] = 4 - scoreFactor
         scoreFactor += 1
     return output
+
 
 def predictRegionOffset(audioFilePath, offsetValue):
     y, sr = librosa.load(audioFilePath, offset=offsetValue, mono=True, duration=60)
@@ -110,17 +90,22 @@ def predictRegionOffset(audioFilePath, offsetValue):
     for e in mfcc:
         dataRow.append(np.mean(e))
     dataRowNumpyArray = np.array(dataRow)
-    # model.summary()
     predicted = model.predict(np.array([dataRowNumpyArray, ]))
     print(predicted)
     predictedClass = np.argmax(predicted[0])
     print(f'predicted class: {predictedClass}')
-    # print(f'predicted class: {np.argmax(predicted[0])}')
     return predicted[0], predictedClass
-    # return np.argmax(predicted[0])
 
 
 def predictSong(audioPath):
+    """
+    Takes an audio track of duration floor(x) minutes,
+    breaks it down into x sections,
+    analyse each one minute chunk
+    process the results of all 1 minute ch
+    :param audioPath:
+    :return: 2 sorted lists reflecting relative rankings based on 2 different methodologies of processing results
+    """
     start = time.time()
     audioLength = int(librosa.get_duration(filename=audioPath))
     numOneMinuteChunks = audioLength // 60 #determine how many complete 1 minute chunks we need
@@ -135,7 +120,11 @@ def predictSong(audioPath):
         firstPositionPredictions[top] += 1
     sortedPredictions = {k: v for k, v in sorted(classPredictions.items(), key=lambda item: item[1], reverse=True)}
     print(sortedPredictions)
-    print(firstPositionPredictions)
+    sortedFirstPositionPredictions = {k: v for k,v in sorted(firstPositionPredictions.items(), key=lambda item: item[1], reverse=True)}
+    print(sortedFirstPositionPredictions)
     end = time.time()
     print(f'predicted song in {end-start} seconds')
-    return sortedPredictions
+    return sortedPredictions, sortedFirstPositionPredictions
+
+songName = "sample_audio/Boubacar Traoré & Ali Farka Touré - Duna Ma Yelema.wav"
+predictSong(songName)

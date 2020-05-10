@@ -4,3 +4,5 @@ img_data/
 venv/
 __pycache__/
 *.csv
+sample_audio/
+wm_regions/
