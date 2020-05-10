@@ -1,5 +1,7 @@
 .idea/
 venv/
 __pycache__/
+wm_regions/
+csv/
 *.csv
 *.wav
