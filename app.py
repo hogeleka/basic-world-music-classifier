@@ -36,7 +36,8 @@ def upload_file():
                 "uploaded_file_results.html",
                 type1Results=predictions1,
                 type2Results=predictions2,
-                length=4
+                length=4,
+                fileName=f.filename
                 # f'<p> Predictions: <br> {getPredictionResultString(predictions1)} </p>' \
                 # f'<p> Predictions: <br> {getPredictionResultString(predictions2)} </p>'
             )

@@ -58,21 +58,10 @@ form {
     color:#FFFFFF;
 }
 
-.results-display {
-    display: block;
-    position: center;
-    color: #002f6c;
-    text-align: center;
-    font-weight: 500;
-    font-size: 16px;
-}
 
-.results-display h3 {
-    color: #002f6c;
-    text-align: center;
-    font-weight: 700
-
-}
+/*h3 {*/
+    /*font: 24px black;*/
+/*}*/
 /*@media all and (max-width:30em){*/
     /*form.submit-button{*/
         /*display:block;*/
