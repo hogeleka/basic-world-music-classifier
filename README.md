@@ -13,6 +13,9 @@ Simple app which uses machine learning to classify audio under Latin American/Ca
 * Results are displayed (see explanation in next section for what "Type 1" and "Type 2" mean)
 
 ### Building your own model
+* Create a directory named `wm_regions`, and another directory named `csv`
+* Navigate to `wm_regions`, and create for sub-directories named
+`latin_america_carrib`, `south_asia`, `south_east_asia`, and `sub_sahara_africa`
 * In each sub-folder in `wm_regions`, download as many (we used 50-70 per region) 1 minute samples (to be sure the audio file is long as the script needs it to be, 61s worth of audio can be used) of `.wav` audio. These would be used to train your model
 * Navigate to `src/CSVGenerator.py` and run that script. It will output a csv file in the `csv` directory which you will use to create your model
 * Navigate to `src/ModelGenerator.py`. At bottom of that file, set the variable `modelFileName` to be the file path of whatever you would like to save your model as. __It must be a .h5 file.__ Run this script; this will use the data written in the csv file to create a machine learning model. 
@@ -20,8 +23,6 @@ Simple app which uses machine learning to classify audio under Latin American/Ca
 At the bottom, call the function `predictSong`, making sure to pass in the path to a .wav audio file as the parameter. It should output two lists, each list is a ranking of the model's prediction for the regions. From most similar (first) to least similar (last).
 The difference between the two lists is this: the __Type 1__ list accumulates the relative scores on a minute-by-minute basis per region, and aggregates it. The __Type 2__ list just uses the top predicted region for each one minute chunk and aggregates them. 
 * In `src/ModelCrossValidator.py`, run that script to perform some basic cross-validation
-
-
 
 
 
