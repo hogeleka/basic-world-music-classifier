@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='stylesheets/main.css') }}>
+    <title>Title</title>
+</head>
+<body>
+    <div class="results-display">
+        <h3>Type 1 results update: </h3>
+        <ol>
+            {% for i in range(length) %}
+                <li>{{ type1Results[i] }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="results-display">
+        <h3>Type 2 results: </h3>
+        <ol>
+            {% for i in range(length) %}
+                <li>{{ type2Results[i] }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+</html>

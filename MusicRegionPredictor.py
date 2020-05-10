@@ -96,6 +96,14 @@ def predictRegionOffset(audioFilePath, offsetValue):
     print(f'predicted class: {predictedClass}')
     return predicted[0], predictedClass
 
+def getResultClassList(sortedDict):
+    musicRegionMap = {
+        0: "Latin America/Caribbean",
+        1: "South Asia",
+        2: "South East Asia",
+        3: "Sub-Saharan Africa"
+    }
+    return [musicRegionMap[code] for code in sortedDict]
 
 def predictSong(audioPath):
     """
@@ -124,7 +132,9 @@ def predictSong(audioPath):
     print(sortedFirstPositionPredictions)
     end = time.time()
     print(f'predicted song in {end-start} seconds')
-    return sortedPredictions, sortedFirstPositionPredictions
+
+    return getResultClassList(sortedPredictions), getResultClassList(sortedFirstPositionPredictions)
+
 
 songName = "sample_audio/Boubacar Traoré & Ali Farka Touré - Duna Ma Yelema.wav"
-predictSong(songName)
+# predictSong(songName)
