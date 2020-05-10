@@ -99,6 +99,3 @@ def predictSong(audioPath):
 
     return getResultClassList(sortedScoreCountPredictions), getResultClassList(sortedFirstPositionPredictions)
 
-
-# songName = "sample_audio/Boubacar Traoré & Ali Farka Touré - Duna Ma Yelema.wav"
-# predictSong(songName)

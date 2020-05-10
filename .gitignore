@@ -1,9 +1,5 @@
 .idea/
-genres/
-img_data/
 venv/
 __pycache__/
-sample_audio/
-wm_regions/
-csv/
 *.csv
+*.wav
