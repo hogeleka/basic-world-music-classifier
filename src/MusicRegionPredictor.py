@@ -35,11 +35,7 @@ def getResultClassList(sortedDict, isType1):
         2: "South East Asia",
         3: "Sub-Saharan Africa"
     }
-    if isType1:
-        valuesSum = sum(sortedDict.values())
-        return [f'{musicRegionMap[code]}: {int((sortedDict[code]/valuesSum) * 100)}%' for code in sortedDict]
-    else:
-        return [f'{musicRegionMap[code]}: {sortedDict[code]}' for code in sortedDict]
+    return [f'{musicRegionMap[code]}: {sortedDict[code]}{"pts" if isType1 else ""}' for code in sortedDict]
 
 
 def predictRegionOffset(audioFilePath, offsetValue):
